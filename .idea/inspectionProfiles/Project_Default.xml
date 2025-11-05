@@ -1,0 +1,91 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <list>
+          <option value="appdirs" />
+          <option value="async-timeout" />
+          <option value="attr" />
+          <option value="attrs" />
+          <option value="certifi" />
+          <option value="charset-normalizer" />
+          <option value="click" />
+          <option value="colorama" />
+          <option value="contourpy" />
+          <option value="cycler" />
+          <option value="dill" />
+          <option value="docutils" />
+          <option value="exceptiongroup" />
+          <option value="ffmpeg-python" />
+          <option value="filelock" />
+          <option value="flask" />
+          <option value="fonttools" />
+          <option value="fsspec" />
+          <option value="future" />
+          <option value="idna" />
+          <option value="imageio" />
+          <option value="iniconfig" />
+          <option value="itsdangerous" />
+          <option value="jinja2" />
+          <option value="joblib" />
+          <option value="kiwisolver" />
+          <option value="label-studio-ml" />
+          <option value="label-studio-tools" />
+          <option value="lxml" />
+          <option value="markupsafe" />
+          <option value="matplotlib" />
+          <option value="mpmath" />
+          <option value="networkx" />
+          <option value="numpy" />
+          <option value="nvidia-cublas-cu12" />
+          <option value="nvidia-cuda-cupti-cu12" />
+          <option value="nvidia-cuda-nvrtc-cu12" />
+          <option value="nvidia-cuda-runtime-cu12" />
+          <option value="nvidia-cudnn-cu12" />
+          <option value="nvidia-cufft-cu12" />
+          <option value="nvidia-curand-cu12" />
+          <option value="nvidia-cusolver-cu12" />
+          <option value="nvidia-cusparse-cu12" />
+          <option value="nvidia-nccl-cu12" />
+          <option value="nvidia-nvjitlink-cu12" />
+          <option value="nvidia-nvtx-cu12" />
+          <option value="opencv-python" />
+          <option value="packaging" />
+          <option value="pandas" />
+          <option value="pillow" />
+          <option value="pluggy" />
+          <option value="psutil" />
+          <option value="py-cpuinfo" />
+          <option value="py4j" />
+          <option value="pyarrow" />
+          <option value="pyparsing" />
+          <option value="pyspark" />
+          <option value="pytest" />
+          <option value="python-dotenv" />
+          <option value="pytz" />
+          <option value="pyyaml" />
+          <option value="redis" />
+          <option value="requests" />
+          <option value="rq" />
+          <option value="scikit-learn" />
+          <option value="scipy" />
+          <option value="seaborn" />
+          <option value="sympy" />
+          <option value="thop" />
+          <option value="threadpoolctl" />
+          <option value="tomli" />
+          <option value="torch" />
+          <option value="torchvision" />
+          <option value="tqdm" />
+          <option value="triton" />
+          <option value="typing-extensions" />
+          <option value="tzdata" />
+          <option value="ultralytics" />
+          <option value="urllib3" />
+          <option value="werkzeug" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
