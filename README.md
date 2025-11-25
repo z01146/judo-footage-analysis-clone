@@ -76,3 +76,30 @@ Use the full FFmpeg path obtained above:
 
 Once you have the full FFmpeg path from Step 2, you can use it to run a conversion command. 
 Because PowerShell cannot run executables with spaces in their path directly, we use `&` to invoke the executable.
+
+## Setting the Output Folder for the Frames
+This project allows extraction of frames from videos for further analysis. You can configure where these frames are saved, either using a default folder or specifying a custom location.
+By default, frames are saved in folder relative to the input video "output_frames"
+
+*You can specify a custom folder in your script or workflow. For example:*
+```bash
+from judo_footage_analysis.frame_extraction import extract_frames
+
+video_path = "path/to/video.mp4"
+output_folder = "path/to/output_frames"
+
+extract_frames(video_path, output_folder)
+```
+- `output_folder` is the path where all extracted frames will be saved
+- The folder will be automatically created if it does not exist
+
+If your using the workflow, use the following command:
+```
+python -m judo_footage_analysis.workflow.extract_frames \
+    --video "videos/match1.mp4" \
+    --output_folder "frames/match1_frames"
+```
+This allows you to control where the output of the frames go.
+
+
+
