@@ -101,5 +101,20 @@ python -m judo_footage_analysis.workflow.extract_frames \
 ```
 This allows you to control where the output of the frames go.
 
+## Automatic FLV to MP4 Conversion (FLV File Provided by Eugene)
+The project includes a Python script to automatically convert FLV files to MP4. The script lives inside the repository, so you can run it directly from your project terminal
 
+### Running the Script
+Open your terminal and turn on your virtual environment
+```
+.\.venv\Scripts\Activate
+```
+Call the conversion script
+```
+python scripts\convert_flv_auto.py
+```
+The script will do the following:
+- Scan the folder specified inside the script (specified for Desktop) for .flv files
+- Convert them to MP4
+- Saves converted files in a `converted_mp4` folder in the same location
 
