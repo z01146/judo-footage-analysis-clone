@@ -1,0 +1,9 @@
+<View>
+    <Choices name="choice" toName="image" choice="single-radio">
+        <Choice value="point" />
+        <Choice value="half_point" />
+        <Choice value="match_stop" />
+        <Choice value="other" />
+    </Choices>
+    <Image name="image" value="$image" />
+</View>

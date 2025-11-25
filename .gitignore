@@ -1,0 +1,14 @@
+.ipynb_checkpoints
+data
+__pycache__
+.env
+*.egg-info
+*.pt
+judo_yolov5_dataset
+runs
+wandb
+tmp
+venv/
+.venv/
+.vscode/
+*.db

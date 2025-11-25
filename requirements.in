@@ -1,0 +1,23 @@
+# -e vendor/detectron2
+opencv-python
+ffmpeg-python
+tqdm
+pandas
+luigi
+imageio
+pyspark
+scikit-learn
+pyarrow
+contexttimer
+
+# for active learning loop
+label-studio-ml>=1.0.8
+ultralytics
+python-dotenv
+torchvision
+rq
+dill
+
+# testing
+pytest
+requests

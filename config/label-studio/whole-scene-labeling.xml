@@ -1,0 +1,10 @@
+<View>
+  <Image name="image" value="$image" maxWidth="600px"/>
+  <Choices name="choice" toName="image" choice="single-radio">
+    <Choice value="Not Match"/>
+    <Choice value="Match"/>
+    <Choice value="Match Intro"/>
+    <Choice value="Match Outro"/>
+    <Choice value="Unsure"/>
+  </Choices>
+</View>

@@ -1,0 +1,19 @@
+[project]
+name = "judo_footage_analysis"
+version = "0.0.1"
+authors = [{ name = "Anthony Miyaguchi", email = "acmiyaguchi@gatech.edu" }]
+description = "Package containing code for the judo footage analysis project"
+readme = "README.md"
+requires-python = ">=3.8"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.dynamic]
+dependencies = { file = "requirements.in" }
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["judo_footage_analysis", "workflow"]
+namespaces = false

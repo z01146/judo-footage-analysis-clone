@@ -1,0 +1,9 @@
+train: /home/GPU/tsutar/home_gtl/intro_to_res/entity-detection-datasets/v2/train/images/ # Path to training images
+val: /home/GPU/tsutar/home_gtl/intro_to_res/entity-detection-datasets/v2/val/images/ # Path to validation images
+test: /home/GPU/tsutar/home_gtl/intro_to_res/entity-detection-datasets/v2/test/images/ # Path to test images (optional)
+
+nc: 3 # Number of classes
+names:
+- player_blue
+- player_white
+- referee

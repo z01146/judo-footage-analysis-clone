@@ -1,0 +1,20 @@
+<View style="display: flex;">
+    <View style="flex: 60%">
+        <Header value="Video timeline segmentation" />
+        <Video name="video" value="$video_url" sync="video" />
+    </View>
+    <View style="flex: 40%">
+        <Audio name="audio0" value="$video_url" sync="video" speed="false" />
+        <Labels name="is_match" toName="audio0" choice="multiple" height="64">
+            <Label value="Match" background="#1BB500" />
+        </Labels>
+        <Audio name="audio1" value="$video_url" sync="video" speed="false" height="64" />
+        <Labels name="is_active" toName="audio1" choice="multiple">
+            <Label value="Active" background="#0000FF" />
+        </Labels>
+        <Audio name="audio2" value="$video_url" sync="video" speed="false" height="64" />
+        <Labels name="is_standing" toName="audio2" choice="multiple">
+            <Label value="Standing" background="#FF0000" />
+        </Labels>
+    </View>
+</View>
