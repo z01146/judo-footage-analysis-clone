@@ -118,3 +118,39 @@ The script will do the following:
 - Convert them to MP4
 - Saves converted files in a `converted_mp4` folder in the same location
 
+*NOTE: This script will only pick up your FLV Video File inside your Desktop and it should be outside the folder directly on the Desktop*
+
+### Video Segmentation of the Converted MP4 File
+After converting to MP4, you can segment a long video into individual Judo matches using the `truncate_videos.py` workflow
+```bash
+python -m judo_footage_analysis.workflow.truncate_videos `
+    --input-root-path "C:\Users\v5karthi\Desktop\converted_mp4" `
+    --output-root-path "C:\Users\v5karthi\Desktop\segmented_matches" `
+    --output-prefix "match_" `
+    --duration 600 `
+    --num-workers 1
+```
+
+What each variable means:
+- `--input-root-path` – folder containing MP4 files to segment
+- `--output-root-path` – folder where segmented matches will be saved
+
+Output will be MP4 files in the specified output folder ready for frame extraction.
+
+## Frame Extraction
+Frames can be extracted from segmented videos for further analysis of each fight:
+```bash
+from judo_footage_analysis.frame_extraction import extract_frames
+
+video_path = "path/to/match.mp4"
+output_folder = "path/to/frames"
+
+extract_frames(video_path, output_folder)
+```
+
+or you can use the workflow:
+```bash
+python -m judo_footage_analysis.workflow.extract_frames \
+    --video "videos/match1.mp4" \
+    --output_folder "frames/match1_frames"
+```
