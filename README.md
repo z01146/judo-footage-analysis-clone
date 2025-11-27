@@ -154,3 +154,18 @@ python -m judo_footage_analysis.workflow.extract_frames \
     --video "videos/match1.mp4" \
     --output_folder "frames/match1_frames"
 ```
+## Generating the Project JSON (Required for Later Workflows)
+Some workflows in this repository require a JSON file listing all videos to be processed.
+To simplify this step, a script is included to automatically create this JSON file.
+
+A script named `generate_video_json.py` is located under the `scripts/` folder. It scans a folder containing your MP4 files and generates a JSON listing each video.
+*Virtual Envoirnment should be active at all times throughout this code unless specified*
+
+**Run the JSON generator:**
+```bash
+python scripts\generate_video_json.py
+```
+**This script creates a JSON file at:**
+```bash
+judo-footage-analysis-main/data/combat_phase/project.json
+```
