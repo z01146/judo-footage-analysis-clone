@@ -169,3 +169,15 @@ python scripts\generate_video_json.py
 ```bash
 judo-footage-analysis-main/data/combat_phase/project.json
 ```
+## Combat Phase Extraction
+After preprocessing, run the phase classifier:
+```bash
+python -m judo_footage_analysis.workflow.extract_combat_phases \
+    --project-json data/combat_phase/project.json \
+    --output-dir data/combat_phase/results
+```
+This workflow does the following:
+- Frame loading
+- Pose or motion feature extraction (depending on model)
+- Semi-supervised classification of combat phases
+
