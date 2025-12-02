@@ -170,6 +170,13 @@ python scripts\generate_video_json.py
 judo-footage-analysis-main/data/combat_phase/project.json
 ```
 ## Combat Phase Extraction
+### Install dependencies
+
+```bash
+pip install -r requirements.txt
+pip install imageio[ffmpeg]
+````
+
 After preprocessing, run the phase classifier:
 ```bash
 python -m judo_footage_analysis.workflow.extract_combat_phases \
