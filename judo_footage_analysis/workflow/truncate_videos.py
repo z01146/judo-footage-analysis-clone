@@ -2,7 +2,7 @@
 Workflow for sampling frames from livestream judo videos.
 
 This script truncates videos into smaller segments for analysis.
-It uses FFmpeg via a local binary if needed.
+It uses FFmpeg via a local binary (FFmpeg 8.0.1) to avoid admin issues.
 """
 
 from argparse import ArgumentParser
@@ -14,12 +14,12 @@ import ffmpeg
 import luigi
 from judo_footage_analysis.utils import ensure_path
 
-# --- PATCHED: Explicit FFmpeg / FFprobe paths ---
+# --- Use local FFmpeg 8.0.1 binaries ---
 FFMPEG_BIN_DIR = r"C:\Users\v5karthi\Desktop\ffmpeg-8.0.1-essentials_build\bin"
 FFMPEG_PATH = os.path.join(FFMPEG_BIN_DIR, "ffmpeg.exe")
 FFPROBE_PATH = os.path.join(FFMPEG_BIN_DIR, "ffprobe.exe")
 
-# Add bin folder to PATH so ffmpeg can be found by subprocess
+# Add bin folder to PATH so ffmpeg-python can find it
 os.environ["PATH"] += os.pathsep + FFMPEG_BIN_DIR
 # --------------------------------------------------
 
@@ -33,28 +33,49 @@ class TruncateVideos(luigi.Task):
     duration = luigi.IntParameter(default=600)   # default 10 minutes per clip
     clips_per_folder = luigi.IntParameter(default=6)  # number of clips per folder
 
+    @property
+    def output_path(self):
+        """Folder where video segments will be saved."""
+        base_name = Path(self.input_path).stem
+        return Path(self.output_root) / f"{self.output_prefix}_{base_name}"
+
     def output(self):
         """Dummy output for Luigi task completion."""
-        return luigi.LocalTarget(f"{self.output_root}/_SUCCESS")
+        return luigi.LocalTarget(self.output_path / "_SUCCESS")
 
     def run(self):
-        """Split input video into segments and organize into folders with multiple clips."""
+        """Truncate input video into segments."""
+        # Ensure output path exists
+        out_dir = ensure_path(self.output_path)
+
         # Get video duration
-        probe = ffmpeg.probe(self.input_path, cmd=FFPROBE_PATH)
-        total_duration = int(float(probe["format"]["duration"]))
+        try:
+            probe = ffmpeg.probe(self.input_path, cmd=FFPROBE_PATH)
+            total_duration = int(float(probe["format"]["duration"]))
+        except ffmpeg.Error as e:
+            print("FFprobe error:")
+            print(e.stderr.decode())
+            raise
 
-        # Compute total number of clips
-        total_clips = math.ceil(total_duration / self.duration)
+        # Calculate how many truncations to do
+        truncations = max(1, math.ceil(total_duration / self.duration))
 
-        for clip_idx in range(total_clips):
-            start_time = clip_idx * self.duration
-            folder_idx = clip_idx // self.clips_per_folder + 1
-            output_dir = ensure_path(Path(self.output_root) / f"{self.output_prefix}_{folder_idx:03d}")
-            output_file = output_dir / f"{clip_idx:04d}.mp4"
+        for i in range(truncations):
+            start_time = self.offset + i * self.duration
+            if start_time >= total_duration:
+                break
 
-            ffmpeg.input(self.input_path, ss=start_time, t=self.duration, cmd=FFMPEG_PATH).output(
-                output_file.as_posix(), format="mp4"
-            ).run(overwrite_output=True, capture_stdout=True, capture_stderr=True, cmd=FFMPEG_PATH)
+            output_file = out_dir / f"{i:04d}.mp4"
+            try:
+                (
+                    ffmpeg.input(self.input_path, ss=start_time, t=self.duration)
+                    .output(str(output_file), vcodec='libx264', acodec='aac', format='mp4')
+                    .run(overwrite_output=True, capture_stdout=True, capture_stderr=True, cmd=FFMPEG_PATH)
+                )
+            except ffmpeg.Error as e:
+                print(f"FFmpeg failed for segment {i}:")
+                print(e.stderr.decode())
+                raise
 
         # Write _SUCCESS file
         with self.output().open("w") as f:
