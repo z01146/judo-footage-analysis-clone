@@ -2,19 +2,25 @@
 Workflow for sampling frames from livestream judo videos.
 
 This script truncates videos into smaller segments for analysis.
-It uses FFmpeg via imageio-ffmpeg to avoid system-level FFmpeg dependencies.
+It uses FFmpeg via a local binary if needed.
 """
 
 from argparse import ArgumentParser
 from pathlib import Path
+import os
 
 import ffmpeg
 import luigi
 from judo_footage_analysis.utils import ensure_path
-import imageio_ffmpeg
 
-# FFmpeg binary path from imageio-ffmpeg
-FFMPEG_PATH = imageio_ffmpeg.get_ffmpeg_exe()
+# --- PATCHED: Explicit FFmpeg / FFprobe paths ---
+FFMPEG_BIN_DIR = r"C:\Users\v5karthi\Desktop\ffmpeg-8.0.1-essentials_build\bin"
+FFMPEG_PATH = os.path.join(FFMPEG_BIN_DIR, "ffmpeg.exe")
+FFPROBE_PATH = os.path.join(FFMPEG_BIN_DIR, "ffprobe.exe")
+
+# Add bin folder to PATH so ffmpeg can be found by subprocess
+os.environ["PATH"] += os.pathsep + FFMPEG_BIN_DIR
+# --------------------------------------------------
 
 
 class TruncateVideos(luigi.Task):
@@ -36,7 +42,7 @@ class TruncateVideos(luigi.Task):
         out_dir = ensure_path(self.output_path)
 
         # Get video duration
-        probe = ffmpeg.probe(self.input_path, cmd=FFMPEG_PATH)
+        probe = ffmpeg.probe(self.input_path, cmd=FFPROBE_PATH)
         total_duration = int(float(probe["format"]["duration"]))
 
         # Calculate how many truncations to do if not specified
