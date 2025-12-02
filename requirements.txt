@@ -238,8 +238,12 @@ urllib3==2.2.1
     # via requests
 werkzeug==2.0.2
     # via
-    #   flask
+    #   flaskq
     #   label-studio-ml
+
+# For video segmentation
+imageio-ffmpeg>=0.4.8
+
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools
