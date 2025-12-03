@@ -188,3 +188,36 @@ This workflow does the following:
 - Pose or motion feature extraction (depending on model)
 - Semi-supervised classification of combat phases
 
+## Video Segmentation
+After converting your livestream recording to MP4, you can segment the long file into individual Judo matches using the `truncate_videos` Luigi workflow.
+
+This workflow cuts the video into fixed-length segments (10 minutes each) and saves them to an output folder.
+
+*NOTE: Segmenting very large recordings (20–30 GB+) can take several hours, especially on laptops. Segments will appear one by one in your `segmented_matches/` folder as they finish.*
+
+**Running the Video Segmentation Workflow**
+In your activated virtual environment
+```bash
+python -m judo_footage_analysis.workflow.truncate_videos \
+    --input-root-path "C:\Users\<username>\Desktop\converted_mp4" \
+    --output-root-path "C:\Users\<username>\Desktop\segmented_matches" \
+    --output-prefix "match_" \
+    --duration 600 \
+    --num-workers 1
+```
+What it means:
+- `--input-root-path` - Folder containing the input MP4 file to segment
+- `--output-root-path` - Folder where segmented match clips will be saved
+- `--output-prefix` - Prefix applied to each segment file name
+- `--duration` - Length (in seconds) of each output clip (example: `600` = 10 minutes)
+- `--num-workers` - Number of parallel workers; keep at 1 on most laptops
+
+  **Example Output Files**
+```bash
+match_0001.mp4
+match_0002.mp4
+match_0003.mp4
+```
+They will keep on appearing until the segmenting is complete. If you want longer commands edit the `--duration` variable to edit the time.
+Segments will appear one by one in your `segmented_matches/` folder as they finish and with it finishing it'll issue a _SUCCESS file which'll confirm that the segmenting is done.
+
