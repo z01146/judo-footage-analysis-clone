@@ -221,3 +221,37 @@ match_0003.mp4
 They will keep on appearing until the segmenting is complete. If you want longer commands edit the `--duration` variable to edit the time.
 Segments will appear one by one in your `segmented_matches/` folder as they finish and with it finishing it'll issue a _SUCCESS file which'll confirm that the segmenting is done.
 
+
+## Combat Phase Extraction (Machine Learning)
+
+This workflow uses a YOLOv8 object detection model to analyze judo matches and classify combat into Tachi-waza (standing) or Ne-waza (groundwork) based on athlete bounding box statistics.
+
+**Generating the Project JSON**
+
+Before running the ML workflow, you must generate a project manifest. This script scans your segmented matches and creates a "map" for the AI.
+
+```bash
+# Run the JSON generator
+python scripts/generate_combat_json.py
+```
+- Input Folder: Scans `Desktop/segmented_matches` by default
+- Output File: Saves the manifest to `data/combat_phase/project.json`
+
+**Running the Extraction Workflow**
+Ensure the `luigid` scheduler is running in a separate terminal window. Then execute the extraction using the following commands:
+
+```bash
+# Set PYTHONPATH so Python recognizes the local project modules
+$env:PYTHONPATH = "."
+
+# Run the ML Workflow Task
+python -m judo_footage_analysis.workflow.extract_combat_phases ExtractCombatPhases `
+    --project-json "data/combat_phase/project.json" `
+    --output-dir "data/combat_phase/results"
+```
+*Key Features:*
+- Automatically downloads the yolov8n.pt weights on the first run
+- Includes a built-in fix for Windows `CERTIFICATE_VERIFY_FAILED` errors during model downloads
+- Handles various `JSON` keys (e.g., `video`, `path`, `video_path`) to prevent `KeyError` crashes
+
+
