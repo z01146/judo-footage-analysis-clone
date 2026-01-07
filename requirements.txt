@@ -244,6 +244,13 @@ werkzeug==2.0.2
 # For video segmentation
 imageio-ffmpeg>=0.4.8
 
+# Added for Machine Learning and Workflow
+ultralytics==8.1.19
+luigi==3.5.0
+opencv-python==4.9.0.80
+pandas==2.2.1
+certifi==2024.2.2
+
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools
