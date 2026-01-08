@@ -251,6 +251,12 @@ opencv-python==4.9.0.80
 pandas==2.2.1
 certifi==2024.2.2
 
+# Added for Visualizing the Data
+easyocr
+matplotlib
+seaborn
+
+
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools
