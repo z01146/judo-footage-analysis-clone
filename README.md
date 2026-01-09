@@ -249,9 +249,45 @@ python -m judo_footage_analysis.workflow.extract_combat_phases ExtractCombatPhas
     --project-json "data/combat_phase/project.json" `
     --output-dir "data/combat_phase/results"
 ```
+
+
 *Key Features:*
 - Automatically downloads the yolov8n.pt weights on the first run
 - Includes a built-in fix for Windows `CERTIFICATE_VERIFY_FAILED` errors during model downloads
 - Handles various `JSON` keys (e.g., `video`, `path`, `video_path`) to prevent `KeyError` crashes
 
+**Data Consolidation**
+The final step generates the research metrics.
+```bash
+python scripts/analyze_and_visualize.py --input-file "data/tournament_master_log.csv" --output-file "data/intensity_mapped_results.csv"
+```
+*The Output*
 
+`intensity_mapped_results.png`
+- This chat provides visual map of the match
+      - Green Regions: Tachi-waza (Standing combat)
+      - Blue Regions: Ne-waza (Groundwork/Grappling)
+      - Red Regions: Mate (Intermission/Stoppages)
+      - Black Line: Smoothed Intensity (The velocity of athlete movement)
+      - "MAJOR ACTION" Markers: Automatic labels identifying explosive spikes (likely throws)
+
+   `intensity_mapped_results.csv`
+  - The raw dataset for statistical research including
+      - `smoothed_intensity`: Velocity-based activity levels
+      - `phase`: The classified state of the match at that timestamp
+      - `detections`: Raw YOLOv8 coordinate strings for custom spatial analysis
+
+### Technical Maintenance
+
+*Smart Logic*
+The tracking focuses on the primary athletes by selecting the largest bounding box area in each frame. If the camera angle changes and background figures (like referees) appear larger than the athletes, you may need to add a class-based filter in `scripts/analyze_and_visualize.py`
+
+*Coordinate Scaling*
+The analysis script includes a "Boost" feature. If the YOLOv8 model outputs normalized coordinates (values between 0 and 1), the script automatically scales them by 1000 to ensure intensity peaks are visible on the Y-axis.
+
+### Core Dependencies Used
+- `ultralytics` (YOLOv8 Engine)
+- `luigi` (Workflow Management)
+- `pandas & numpy` (Data Analytics)
+- `seaborn & matplotlib` (Visualization)
+- `opencv-python` (Frame Processing)
